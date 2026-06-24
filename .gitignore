@@ -1,0 +1,110 @@
+# ====================== 1. C/C++ 编译产物 ======================
+*.o
+*.obj
+*.lo
+*.slo
+*.a
+*.lib
+*.la
+*.lai
+*.dll
+*.so
+*.so.*
+*.dylib
+*.exe
+*.out
+*.bin
+*.pdb
+*.ilk
+*.idb
+*.res
+*.prl
+*.qm
+
+# 预编译头
+*.gch
+*.pch
+*_pch.h.cpp
+
+# ====================== 2. Qt 工具自动生成中间文件 ======================
+# MOC、UI、RCC 生成代码
+moc_*.cpp
+moc_*.h
+ui_*.h
+qrc_*.cpp
+*.moc
+*_resource.rc
+
+# QML 缓存
+*.qmlc
+*.jsc
+*_qmlcache.qrc
+
+# qmake 缓存与构建脚本
+/.qmake.cache
+/.qmake.stash
+Makefile*
+object_script.*.Debug
+object_script.*.Release
+
+# ====================== 3. Qt Creator 本地用户配置（必忽略！） ======================
+# qmake 项目本地配置
+*.pro.user
+*.pro.user.*
+
+# CMake 项目本地配置
+CMakeLists.txt.user
+CMakeLists.txt.user.*
+
+# QML 项目
+*.qmlproject.user
+*.qmlproject.user.*
+
+# Creator 工程辅助文件（机器独有）
+*.creator
+*.creator.user*
+*.files
+*.includes
+*.config
+*.cxxflags
+*.cflags
+compile_commands.json
+*.autosave
+
+# ====================== 4. 构建输出目录（Qt 默认 shadow build） ======================
+build/
+build-*/
+out/
+Debug/
+Release/
+debug/
+release/
+deploy/
+
+# CMake 专属缓存目录
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+
+# ====================== 5. 编辑器/系统临时文件 ======================
+# vim/nano 缓存
+.*.swp
+*.swap
+*~
+
+# 版本冲突残留
+*.orig
+*.rej
+
+# 系统文件
+.DS_Store
+Thumbs.db
+.directory
+tags
+core
+!core/
+
+# 日志、临时文件
+*.log
+*.tmp
+*.bak
