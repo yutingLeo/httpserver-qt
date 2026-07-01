@@ -194,9 +194,11 @@ public:
         newUser.updatedAt = newUser.createdAt;
 
         m_userStorage->insertWithNewId(newUser);
-        QString token = m_sessions->startSession(newUser.id);
+        // 签发 token（含 access_token/token_type/expires_in，符合 RFC 6749）
+        auto tokenInfo = m_sessions->startSession(newUser.id);
         QJsonObject resp = newUser.toJson();
-        resp["token"] = token;
+        for (const auto &k : tokenInfo.toJson().keys())
+            resp[k] = tokenInfo.toJson()[k];
         return QHttpServerResponse(resp, QHttpServerResponder::StatusCode::Created);
     }
 
@@ -209,11 +211,13 @@ public:
         for (const auto &user : users) {
             if (user.email == json["email"].toString() &&
                 verifyPassword(json["password"].toString(), user.passwordHash)) {
-                // 清除旧会话（可选，这里先清除再创建）
-                m_sessions->clearUserSessions(user.id);
-                QString token = m_sessions->startSession(user.id);
+                // 多设备登录：不清除旧会话，每次登录签发独立 token
+                // 旧 token 在过期或显式 logout 时失效
+                // clearUserSessions 保留给"修改密码后强制下线所有设备"等场景
+                auto tokenInfo = m_sessions->startSession(user.id);
                 QJsonObject resp = user.toJson();
-                resp["token"] = token;
+                for (const auto &k : tokenInfo.toJson().keys())
+                    resp[k] = tokenInfo.toJson()[k];
                 return QHttpServerResponse(resp);
             }
         }
